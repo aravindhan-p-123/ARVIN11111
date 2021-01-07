@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>CALCULATOR</title>
+<style>
+#mainbox{
+    width: 330pt;
+    height: 500pt;
+    margin: auto;
+    font-size: 0;  
+    padding: 12pt 12pt 12pt 12pt;
+    border-radius: 20pt;
+    background-color: #ff6f61;
+}
+#dbox {
+    width: 300pt;
+    height: 75pt;
+    background-color: #eeeeee;
+    border-radius: 90pt;
+    margin: 12pt 12pt;
+}
+#dboxnum {
+    text-align: right;
+    line-height: 85pt;
+    color: #000000;
+    font-size: 30px;
+    font-family: "verdana";
+    font-weight: 500;
+    margin-right: 40pt;
+}
+button {
+    font-size: 25pt;
+    height: 62pt;
+    width: 62pt;
+    border-radius: 40pt;
+    border-width: 0;  
+    margin: 8pt 8pt;
+    
+}
+button:focus {
+	outline:0;
+}
+.button1 {
+    width: 140pt;
+    margin: 8pt 8pt;
+    
+}
+.button2 {
+    height: 142pt;
+    margin: 4pt 80pt; 
+    float: right;
+padding: 12pt 12pt 12pt 12pt;
+}
+.button3 {
+    color: #ffffff;
+    background-color: #f7cac9;
+    margin: 10pt 10pt;
+   
+}
+.button4 {
+    color: #fff;
+    background-color: #92a8d1;
+    margin: 10pt 10pt;
+    
+}
+
+</style> 
+</head>
+<body>
+ <div id="mainbox">
+	<div id="dbox">
+                <h1 id="dboxnum"></h1>
+        </div>
+	    <button id="clr" class="button button1 button4">C</button>
+            <button id="div" class="button button4 buttono">÷</button>
+            <button id="multi" class="button button4 buttono">×</button>
+            <button id="7" class="button button3 buttonn">7</button>
+            <button id="8" class="button button3 buttonn">8</button>
+            <button id="9" class="button button3 buttonn">9</button>
+            <button id="sub" class="button button4 buttono">-</button>
+            <button id="4" class="button button3 buttonn">4</button>
+            <button id="5" class="button button3 buttonn">5</button>
+            <button id="6" class="button button3 buttonn">6</button>
+            <button id="add" class="button button4 buttono">+</button>
+	    <button id="1" class="button button3 buttonn">1</button>
+            <button id="2" class="button button3 buttonn">2</button>
+            <button id="3" class="button button3 buttonn">3</button>
+            <button id="equal" class="button button4 buttono button2">=</button>
+            <button id="0" class="button button3  buttonn">0</button>
+            <button id="00" class="button button3 buttonn">00</button>
+            <button id="dot" class="button button3 buttonn">.</button>
+
+ </div>
+
+<script >const decimal = document.getElementById("decimal");
+
+const clear = document.getElementById("clr");
+const displayValElement = document.getElementById("dboxnum");
+const btnNumbers = document.getElementsByClassName("buttonn");
+const btnOperators = document.getElementsByClassName("buttono");
+
+var displayVal = '0';
+var pendingVal;  
+var evalStringArray = []; 
+  
+updateDisplayVal = (e) => {
+    var btnText = e.target.innerText;
+    if(displayVal === "0") { 
+      displayVal = ""; 
+    }
+
+    displayVal += btnText; 
+    displayValElement.innerText = displayVal;
+} 
+
+
+performOperation = (e) => {
+  var operator = e.target.innerText;  
+  
+    switch (operator) {
+        case '+':
+            pendingVal = displayVal;
+            displayVal = '0';
+            displayValElement.innerText = displayVal;
+            evalStringArray.push(pendingVal);
+            evalStringArray.push('+');
+            break;
+        case '-':
+            pendingVal = displayVal;
+            displayVal = '0';
+            displayValElement.innerText = displayVal;
+            evalStringArray.push(pendingVal);
+            evalStringArray.push('-');
+            break;
+        case '×':
+            pendingVal = displayVal;
+            displayVal = '0';
+            displayValElement.innerText = displayVal;
+            evalStringArray.push(pendingVal);
+            evalStringArray.push('*');
+            break;
+        case '÷':
+            pendingVal = displayVal;
+            displayVal = '0';
+            displayValElement.innerText = displayVal;
+            evalStringArray.push(pendingVal);
+            evalStringArray.push('/');
+            break;
+        case '=':
+            evalStringArray.push(displayVal);
+            var evaluation = eval(evalStringArray.join(' '));           
+            displayVal = evaluation + ''; 
+            console.log(typeof displayVal);
+            displayValElement.innerText = displayVal;
+            evalStringArray = []; 
+            break;
+        default:
+            break;
+    }
+}
+
+
+for (let i = 0; i < btnNumbers.length; i++) {
+    btnNumbers[i].addEventListener('click', updateDisplayVal) 
+}
+
+for (let i = 0; i < btnOperators.length; i++) {
+    btnOperators[i].addEventListener('click', performOperation);
+}
+
+clear.onclick = () => {
+    displayVal = '0';
+    pendingVal = undefined;
+    evalStringArray = [];
+    displayValElement.innerHTML = displayVal;
+}
+decimal.onclick = () => { 
+    if(!displayVal.includes('.')) {
+        displayVal += '.';
+    }
+    displayValElement.innerText = displayVal;
+}
+</script>
+</body>
+</html>
+
