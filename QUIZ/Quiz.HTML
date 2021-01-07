@@ -1,0 +1,132 @@
+<html>
+<head>
+    <title>Quiz</title>
+    <style>
+        div#test{
+            border:#5AB029 3px solid;
+            padding:10px 40px 40px 40px;
+            background: linear-gradient(to bottom, #f9ccac 0%, #e0876a 70%);;
+            width:50%;}
+    </style>
+    
+</head>
+<body>
+    <h2 id="test_status"></h2>
+    <div id="test"></div>
+</body>
+<script >
+var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, correct = 0;
+var questions = [
+  {
+      question: "WHO IS FATHER OF OUR NATION?",
+      a: "MODIJI",
+      b: "GANDHIJI",
+      c: "CAPTIAN PRABHAKARAN",
+      answer: "B"
+    },
+  {
+      question: "WHO IS THE SINGER OF ROWDY BABY?",
+      a: "JUSTIN BIEBER",
+      b: "AR RAHMAN",
+      c: "DHANUSH",
+      answer: "C"
+    },
+  {
+      question: "WHICH IS OUR NATIONAL FLOWER?",
+      a: "LOTUS",
+      b: "SUNFLOWER",
+      c: "ROSE",
+      answer: "A"
+    },
+  {
+      question: "WHEN WILL RAJNI GET INTO POLITICS?",
+      a: "NEXT ERA",
+      b: "NEXT GEN",
+      c: "HYPOTHETICAL QUESTION",
+      answer: "C"
+    },
+	{
+      question: "WHICH ONE OF THE FOLLOWING IS GVM MOVIE?",
+      a: "VTV",
+      b: "ARAM",
+      c: "NAAN KADAVUL",
+      answer: "A"
+    },
+	{
+      question: "WHAT IS MEANING OF ATM?",
+      a: "AUTOMATED TELLER MACHINE",
+      b: "ALL TIME MACHINE",
+      c: "ANY TIME MUTTON",
+      answer: "A"
+    },
+	{
+      question: "WHO SUNG BUTTABOMMA?",
+      a: "ANIRUDH",
+      b: "AMRAN MALIK",
+      c: "ANURAG KULKARNI",
+      answer: "B"
+    },
+	{
+      question: "1+1?",
+      a: "0",
+      b: "2",
+      c: "3",
+      answer: "B"
+    },
+	{
+      question: "WHO IS THE DIRECTOR OF RAJA RANI?",
+      a: "MANI RATNAM",
+      b: "ATLEE",
+      c: "BALA",
+      answer: "A"
+    },
+	{
+      question: "THIRUKURAL WAS WRITTEN BY",
+      a: "NONE OF THESE",
+      b: "VEEERAMAMUNIVAR",
+      c: "THIRUVALLUVAR",
+      answer: "C"
+    }
+  ]; 
+function get(x){
+  return document.getElementById(x);
+}
+function renderQuestion(){
+  test = get("test");
+  if(pos >= questions.length){
+    test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+    get("test_status").innerHTML = "Test completed";
+    pos = 0;
+    correct = 0;
+    return false;
+  }
+  get("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
+  
+  question = questions[pos].question;
+  chA = questions[pos].a;
+  chB = questions[pos].b;
+  chC = questions[pos].c;
+  test.innerHTML = "<h3>"+question+"</h3>";
+  test.innerHTML += "<label> <input type='radio' name='choices' value='A'> "+chA+"</label><br>";
+  test.innerHTML += "<label> <input type='radio' name='choices' value='B'> "+chB+"</label><br>";
+  test.innerHTML += "<label> <input type='radio' name='choices' value='C'> "+chC+"</label><br><br>";
+  test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+}
+function checkAnswer(){
+  choices = document.getElementsByName("choices");
+  for(var i=0; i<choices.length; i++){
+    if(choices[i].checked){
+      choice = choices[i].value;
+    }
+  }
+  
+  if(choice == questions[pos].answer){
+   
+    correct++;
+  }
+  pos++;
+  renderQuestion();
+}
+window.addEventListener("load", renderQuestion);
+</script>
+</html>
